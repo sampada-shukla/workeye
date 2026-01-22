@@ -30,9 +30,9 @@ function TutorialOnlyGuard({ children }: { children: JSX.Element }) {
 
   if (
     TUTORIAL_ONLY_MODE &&
-    location.pathname !== "/tutorials"
+    location.pathname !== "/tutorial"
   ) {
-    return <Navigate to="/tutorials" replace />;
+    return <Navigate to="/tutorial" replace />;
   }
 
   return children;
