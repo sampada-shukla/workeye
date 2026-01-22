@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { TopBanner } from './components/TopBanner';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { HeroSection } from './components/HeroSection';
 import { FeaturesSection } from './components/FeaturesSection';
 import { ProductSection } from './components/ProductSection';
@@ -22,6 +22,20 @@ import { AdminDashboard } from "./components/AdminDashboard";
 type ViewState = 'landing' | 'checkout' | 'dashboard';
 
 type BillingCycle = "monthly" | "quarterly" | "half-yearly" | "yearly";
+
+const TUTORIAL_ONLY_MODE = true;
+function TutorialOnlyGuard({ children }: { children: JSX.Element }) {
+  const location = useLocation();
+
+  if (
+    TUTORIAL_ONLY_MODE &&
+    location.pathname !== "/tutorials"
+  ) {
+    return <Navigate to="/tutorials" replace />;
+  }
+
+  return children;
+}
 
 export default function App() {
   const navigate = useNavigate();
@@ -97,6 +111,7 @@ export default function App() {
 
   // Show landing page
   return (
+    <TutorialOnlyGuard>
     <Routes>
       {/* Landing */}
       <Route
@@ -165,5 +180,6 @@ export default function App() {
         }
       />
     </Routes>
+    </TutorialOnlyGuard>
   );
 }
