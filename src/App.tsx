@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { TopBanner } from './components/TopBanner';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ import { PaymentSuccess } from "./components/PaymentSuccess";
 import Tutorial_Page from "./components/Tutorial_Page";
 import { PartnerDashboard } from "./components/PartnerDashboard";
 import { AdminDashboard } from "./components/AdminDashboard";
+import React from 'react';
 
 type ViewState = 'landing' | 'checkout' | 'dashboard';
 
