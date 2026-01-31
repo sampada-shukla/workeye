@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BarChart3,
   LayoutDashboard,
@@ -11,8 +11,6 @@ import {
   UserCheck,
 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useEffect } from 'react';
-
 
 import logoImage from "./assets/workeye.jpg";
 import workeye_dashboard from "./assets/workeye_dashboard.png";
@@ -20,7 +18,6 @@ import members from "./assets/members.png";
 import view_details_1 from "./assets/view_details_1.png";
 import view_analytics from "./assets/view_analytics.png";
 import application_usage from "./assets/application_usage.png";
-
 
 import { TutorialVideo } from './TutorialVideo';
 import { Footer} from './Footer';
@@ -41,7 +38,7 @@ const getScreenshotStyle = (index: number) => {
     shadow: `hsla(${hue}, 70%, 55%, 0.25)`,
   }
 }
-// Container dimensions - keeps all cards equal size
+
 const CONTAINER_CONFIG = {
   borderRadius: '1.5rem',
   padding: '0.5rem',
@@ -49,15 +46,14 @@ const CONTAINER_CONFIG = {
   innerBorderRadius: '1rem',
 }
 
-// Screenshot sizing - controls how images fit in containers
 const SCREENSHOT_CONFIG = {
   default: {
     objectFit: 'cover' as const,
     width: '100%',
     height: '100%',
   },
-  
 }
+
 type TutorialStep = {
   number: number;
   title: string;
@@ -66,17 +62,16 @@ type TutorialStep = {
   iconColor: string;
   image: string;
   details?: string[] | undefined;
-  //layout?: 'portrait' | 'landscape';
 }
+
 type TutorialSection = {
   sectionId: number;
   sectionTitle: string;
   sectionDescription: string;
   steps: TutorialStep[];
 };
- export const tutorialSections: TutorialSection[] = [
 
-
+export const tutorialSections: TutorialSection[] = [
   {
     sectionId: 1,
     sectionTitle: '1: Dashboard Overview',
@@ -94,7 +89,6 @@ type TutorialSection = {
       },
     ],
   },
-
   {
     sectionId: 2,
     sectionTitle: '2: Individual Employee Analytics',
@@ -109,7 +103,6 @@ type TutorialSection = {
         icon: UserCheck,
         iconColor: 'rgb(34, 197, 94)',
         image: view_details_1, 
-        
       },
       {
         number: 3,
@@ -119,7 +112,6 @@ type TutorialSection = {
         icon: BarChart3,
         iconColor: 'rgb(79, 70, 229)',
         image: view_analytics, 
-        
       },
       {
         number: 4,
@@ -132,7 +124,6 @@ type TutorialSection = {
       },
     ],
   },
-
   {
     sectionId: 3,
     sectionTitle: '3: Team & Member Management',
@@ -151,6 +142,7 @@ type TutorialSection = {
     ],
   },
 ]
+
 interface ScreenshotCardProps {
   step: TutorialStep;
   stepIndex: number;
@@ -168,9 +160,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
 }) => {
   const boxStyle = getScreenshotStyle(colorIndex)
   const Icon = step.icon
-
-  // Get screenshot config for this specific step
-  const screenshotStyle =  SCREENSHOT_CONFIG.default
+  const screenshotStyle = SCREENSHOT_CONFIG.default
 
   return (
     <div
@@ -199,7 +189,6 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
             transition: 'transform 0.3s ease',
           }}
         >
-          {/* Colored Container */}
           <div
             style={{
               background: boxStyle.bg,
@@ -209,7 +198,6 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
               boxShadow: `0 4px 12px ${boxStyle.shadow}`,
             }}
           >
-            {/* Screenshot Container with Fixed Aspect Ratio */}
             <div
               style={{
                 borderRadius: CONTAINER_CONFIG.innerBorderRadius,
@@ -225,7 +213,9 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
                 src={step.image}
                 alt={step.title}
                 style={{
-                  
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
                   display: 'block',
                 }}
               />
@@ -241,10 +231,10 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
               transition={{ duration: 0.2 }}
               style={{
                 position: 'fixed',
-                top: '20%',
-                left: '44%',
-                transform: 'translateX(-50%,-50%)',
-                width: '360px',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 'min(360px, 90vw)',
                 background: 'rgba(15, 23, 42, 0.97)',
                 backdropFilter: 'blur(12px)',
                 borderRadius: '1.25rem',
@@ -270,7 +260,6 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
                   fontSize: '1rem',
                   fontWeight: 800,
                   boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
-                  fontFamily: '"Poppins", sans-serif',
                 }}
               >
                 {step.number}
@@ -293,8 +282,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
 
               <h4
                 style={{
-                  fontFamily: '"Poppins", sans-serif',
-                  fontSize: '17px',
+                  fontSize: '1.0625rem',
                   fontWeight: 600,
                   marginBottom: '0.5rem',
                   lineHeight: '1.3',
@@ -305,8 +293,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
 
               <p
                 style={{
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: '13px',
+                  fontSize: '0.8125rem',
                   color: 'rgba(255,255,255,0.9)',
                   lineHeight: '1.5',
                   fontWeight: 400,
@@ -322,12 +309,10 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
   )
 }
 
-/* ============================================
-   MAIN COMPONENT
-============================================ */
-
 export default function TutorialPage() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
 
   useEffect(() => {
     const link = document.createElement('link')
@@ -335,10 +320,69 @@ export default function TutorialPage() {
     link.rel = 'stylesheet'
     document.head.appendChild(link)
 
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+
     return () => {
       document.head.removeChild(link)
+      window.removeEventListener('resize', handleResize)
     }
   }, [])
+
+  // Responsive styles
+  const heroGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : '1.1fr 0.9fr',
+    gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+    alignItems: 'center',
+  }
+
+  const h1Style = {
+    fontFamily: '"Poppins", sans-serif',
+    fontSize: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+    fontWeight: 700,
+    marginBottom: '1rem',
+    lineHeight: isMobile ? '2.5rem' : isTablet ? '3rem' : '3.625rem',
+    letterSpacing: '-0.025em',
+  }
+
+  const h2Style = {
+    fontFamily: '"Poppins", sans-serif',
+    fontSize: isMobile ? '1.75rem' : isTablet ? '2rem' : '2.25rem',
+    fontWeight: 700,
+    color: 'rgb(20, 47, 83)',
+    marginBottom: '0.65rem',
+    lineHeight: isMobile ? '2.25rem' : isTablet ? '2.5rem' : '2.875rem',
+  }
+
+  const h3Style = {
+    fontFamily: '"Poppins", sans-serif',
+    fontSize: isMobile ? '1.5rem' : isTablet ? '1.75rem' : '1.75rem',
+    fontWeight: 700,
+    color: 'rgb(20, 47, 83)',
+    marginBottom: '0.5rem',
+    lineHeight: '1.3',
+  }
+
+  const cardsGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : 'repeat(2, 1fr)',
+    gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+    alignItems: 'start',
+  }
+
+  const topRowGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : '1fr 1fr',
+    gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '2.5rem',
+    marginBottom: '3rem',
+    alignItems: 'stretch',
+  }
 
   return (
     <div
@@ -365,86 +409,63 @@ export default function TutorialPage() {
         {/* Hero Section */}
         <section
           style={{
-            padding: '3rem 1.5rem',
-            minHeight: '500px',
+            padding: isMobile ? '2rem 1rem' : isTablet ? '2.5rem 1.5rem' : '3rem 1.5rem',
+            minHeight: isMobile ? 'auto' : '500px',
             display: 'flex',
             alignItems: 'center',
             background: 'linear-gradient(135deg, #ecfeff 0%, #ffffff 50%, #ecfeff 100%)',
           }}
         >
-          <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', padding: '0 1.5rem' }}>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1.1fr 0.9fr',
-                gap: '3rem',
-                alignItems: 'center',
-              }}
-            >
-              
+          <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', padding: isMobile ? '0 1rem' : '0 1.5rem' }}>
+            <div style={heroGridStyle}>
               {/* LEFT: Text Content */}
-              <div style={{ maxWidth: '650px' }}>
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  style={{
-                    fontFamily: '"Poppins", sans-serif',
-                    fontSize: '48px',
-                    fontWeight: 700,
-                    marginBottom: '1rem',
-                    lineHeight: '58px',
-                    letterSpacing: '-0.025em',
-                  }}
-                >
+              <div style={{ maxWidth: isMobile ? '100%' : '650px' }}>
+                <h1 style={h1Style}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-                    <img src={logoImage} alt="MeetHub Logo" style={{ width: '7.5rem', height: '7.5rem', objectFit: 'contain' }} />
+                    <img 
+                      src={logoImage} 
+                      alt="WorkEye Logo" 
+                      style={{ 
+                        width: isMobile ? '5rem' : '7.5rem', 
+                        height: isMobile ? '5rem' : '7.5rem', 
+                        objectFit: 'contain' 
+                      }} 
+                    />
                   </div>
 
-                  <span style={{ color: 'rgb(6, 182, 212)', fontWeight: 900 }}>Explore MeetHub</span>{' '}
+                  <span style={{ color: 'rgb(6, 182, 212)', fontWeight: 900 }}>Explore WorkEye</span>{' '}
                   <span style={{ color: '#0F172A' }}>with Detailed Step-by-Step Tutorials</span>
-                </motion.h1>
+                </h1>
 
-                <motion.p
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
+                <p
                   style={{
                     fontFamily: '"Inter", sans-serif',
-                    fontSize: '16px',
+                    fontSize: isMobile ? '0.9375rem' : '1rem',
                     fontWeight: 400,
                     color: '#475569',
                     marginBottom: '1.5rem',
-                    lineHeight: '26px',
+                    lineHeight: '1.625rem',
                   }}
                 >
                   Learn how to streamline operations, boost productivity, and scale faster with comprehensive tutorials
                   covering setup, configuration, and advanced features.
-                </motion.p>
+                </p>
 
                 {/* Feature List */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}
-                >
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {[
                     'Quick start guides for instant setup',
                     'Advanced feature walkthroughs',
                     'How it works steps for smooth onboarding',
-                  ].map((feature, idx) => (
-                    <motion.div
+                  ].map((feature) => (
+                    <div
                       key={feature}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, delay: 0.5 + idx * 0.1 }}
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}
+                      style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
                     >
                       <div
                         style={{
-                          width: '2.25rem',
-                          height: '2.25rem',
+                          width: isMobile ? '1.75rem' : '2.25rem',
+                          height: isMobile ? '1.75rem' : '2.25rem',
                           borderRadius: '0.5rem',
                           background: 'rgba(6, 182, 212, 0.15)',
                           border: '2px solid rgb(6, 182, 212)',
@@ -454,112 +475,90 @@ export default function TutorialPage() {
                           flexShrink: 0,
                         }}
                       >
-                        <CheckCircle style={{ width: '1.25rem', height: '1.25rem', color: 'rgb(6, 182, 212)' }} />
+                        <CheckCircle style={{ width: isMobile ? '1rem' : '1.25rem', height: isMobile ? '1rem' : '1.25rem', color: 'rgb(6, 182, 212)' }} />
                       </div>
                       <span
                         style={{
                           fontFamily: "'Inter', sans-serif",
-                          fontSize: '16px',
+                          fontSize: isMobile ? '0.9375rem' : '1rem',
                           fontWeight: 500,
                           color: '#475569',
-                          lineHeight: '26px',
+                          lineHeight: '1.625rem',
                         }}
                       >
                         {feature}
                       </span>
-                    </motion.div>
+                    </div>
                   ))}
-                </motion.div>
+                </div>
               </div>
 
-              {/* RIGHT: Enhanced Video Card */}
-              <motion.div
-                style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-                animate={{ y: [0, -12, 0] }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-              >
-                <TutorialVideo />
-              </motion.div>
+              {/* RIGHT: Video Card */}
+              {!isMobile && (
+                <motion.div
+                  style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+                  animate={{ y: [0, -12, 0] }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                >
+                  <TutorialVideo />
+                </motion.div>
+              )}
             </div>
           </div>
         </section>
 
         {/* Tutorial Section Header */}
         <section
-          style={{ padding: '2rem 1.5rem 1.5rem', background: 'linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc)' }}
+          style={{ 
+            padding: isMobile ? '1.5rem 1rem' : '2rem 1.5rem 1.5rem', 
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc)' 
+          }}
         >
-          <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center', padding: '0 1.5rem' }}>
-            <h2
-              style={{
-                fontFamily: '"Poppins", sans-serif',
-                fontSize: '36px',
-                fontWeight: 700,
-                color: 'rgb(20, 47, 83)',
-                marginBottom: '0.65rem',
-                lineHeight: '46px',
-              }}
-            >
+          <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center', padding: isMobile ? '0 1rem' : '0 1.5rem' }}>
+            <h2 style={h2Style}>
               Complete Step-by-Step Guide
             </h2>
 
             <p
               style={{
                 fontFamily: '"Inter", sans-serif',
-                fontSize: '16px',
+                fontSize: isMobile ? '0.9375rem' : '1rem',
                 color: '#475569',
                 maxWidth: '720px',
                 margin: '0 auto',
-                lineHeight: '26px',
+                lineHeight: '1.625rem',
                 fontWeight: 400,
               }}
             >
-              Master MeetHub with our comprehensive guide covering every feature from sign-up to advanced functionality
+              Master WorkEye with our comprehensive guide covering every feature from sign-up to advanced functionality
             </p>
           </div>
         </section>
 
-          {/* Tutorial Cards Section */}
-        <section style={{ padding: '1.5rem 1.5rem 2rem' }}>
-          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem' }}>
-            {/* =========================
-                Top Row: Section 1 + Section 2 Step 2
-            ========================= */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '2.5rem',
-                marginBottom: '3rem',
-                alignItems: 'stretch',
-              }}
-            >
-              {/* LEFT → Section 1 Step 1 */}
+        {/* Tutorial Cards Section */}
+        <section style={{ padding: isMobile ? '1rem' : '1.5rem 1.5rem 2rem' }}>
+          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: isMobile ? '0 1rem' : '0 1.5rem' }}>
+            {/* Top Row: Section 1 + Section 2 Step 2 */}
+            <div style={topRowGridStyle}>
+              {/* Section 1 */}
               {(() => {
                 const section1 = tutorialSections.find(s => s.sectionId === 1)!
                 const step1 = section1.steps[0]
 
                 return (
                   <div key="section1" style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ marginBottom: '1.5rem', minHeight: '120px' }}>
-                      <h3
-                        style={{
-                          fontFamily: '"Poppins", sans-serif',
-                          fontSize: '28px',
-                          fontWeight: 700,
-                          color: 'rgb(20, 47, 83)',
-                          marginBottom: '0.5rem',
-                        }}
-                      >
+                    <div style={{ marginBottom: '1.5rem', minHeight: isMobile ? 'auto' : '120px' }}>
+                      <h3 style={h3Style}>
                         {section1.sectionTitle}
                       </h3>
                       <p
                         style={{
                           fontFamily: '"Inter", sans-serif',
-                          fontSize: '15px',
+                          fontSize: isMobile ? '0.875rem' : '0.9375rem',
                           color: '#64748b',
                           lineHeight: '1.6',
                         }}
@@ -581,29 +580,21 @@ export default function TutorialPage() {
                 )
               })()}
 
-              {/* RIGHT → Section 2 Step 2 */}
+              {/* Section 2 Step 2 */}
               {(() => {
                 const section2 = tutorialSections.find(s => s.sectionId === 2)!
                 const step2 = section2.steps.find(s => s.number === 2)!
 
                 return (
                   <div key="section2-step2" style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ marginBottom: '1.5rem', minHeight: '120px' }}>
-                      <h3
-                        style={{
-                          fontFamily: '"Poppins", sans-serif',
-                          fontSize: '28px',
-                          fontWeight: 700,
-                          color: 'rgb(20, 47, 83)',
-                          marginBottom: '0.5rem',
-                        }}
-                      >
+                    <div style={{ marginBottom: '1.5rem', minHeight: isMobile ? 'auto' : '120px' }}>
+                      <h3 style={h3Style}>
                         {section2.sectionTitle}
                       </h3>
                       <p
                         style={{
                           fontFamily: '"Inter", sans-serif',
-                          fontSize: '15px',
+                          fontSize: isMobile ? '0.875rem' : '0.9375rem',
                           color: '#64748b',
                           lineHeight: '1.6',
                         }}
@@ -626,23 +617,14 @@ export default function TutorialPage() {
               })()}
             </div>
 
-            {/* =========================
-                Section 2 Remaining Steps (3-8)
-            ========================= */}
+            {/* Section 2 Remaining Steps */}
             {(() => {
               const section2 = tutorialSections.find(s => s.sectionId === 2)!
               const remainingSteps = section2.steps.filter(s => s.number !== 2)
 
               return (
                 <div key="section2-remaining" style={{ marginBottom: '3rem' }}>
-                  <div
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(2, 1fr)',
-                      gap: '3rem',
-                      alignItems: 'start',
-                    }}
-                  >
+                  <div style={cardsGridStyle}>
                     {remainingSteps.map((step, stepIndex) => (
                       <ScreenshotCard
                         key={step.number}
@@ -658,39 +640,25 @@ export default function TutorialPage() {
               )
             })()}
 
-            {/* =========================
-                Render remaining sections (skip Section 1 and 2)
-            ========================= */}
+            {/* Remaining Sections */}
             {tutorialSections
               .filter(section => section.sectionId !== 1 && section.sectionId !== 2)
               .map((section) => {
                 const stepsToRender = section.steps
                 if (stepsToRender.length === 0) return null
 
-                const isMultiCard = stepsToRender.length > 1
-                const gridCols = 'repeat(2, 1fr)' // Always use 2-column grid
-                const gridStyle = isMultiCard ? {} : { gridTemplateColumns: 'repeat(2, 1fr)' }
+                const isSingleCard = stepsToRender.length === 1
 
                 return (
                   <div key={section.sectionId} style={{ marginBottom: '3rem' }}>
-                    {/* Section Header */}
                     <div style={{ marginBottom: '1.5rem' }}>
-                      <h3
-                        style={{
-                          fontFamily: '"Poppins", sans-serif',
-                          fontSize: '28px',
-                          fontWeight: 700,
-                          color: 'rgb(20, 47, 83)',
-                          lineHeight: '1.3',
-                          marginBottom: '0.5rem',
-                        }}
-                      >
+                      <h3 style={h3Style}>
                         {section.sectionTitle}
                       </h3>
                       <p
                         style={{
                           fontFamily: '"Inter", sans-serif',
-                          fontSize: '15px',
+                          fontSize: isMobile ? '0.875rem' : '0.9375rem',
                           fontWeight: 400,
                           color: '#64748b',
                           lineHeight: '1.6',
@@ -700,17 +668,19 @@ export default function TutorialPage() {
                       </p>
                     </div>
 
-                    {/* Cards Grid */}
-                    <div
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: gridCols,
-                        gap: '3rem',
-                        alignItems: 'start',
-                      }}
-                    >
+                    <div style={isSingleCard ? {
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    } : cardsGridStyle}>
                       {stepsToRender.map((step, stepIndex) => (
-                        <div key={step.number} style={isMultiCard ? {} : { gridColumn: '1 / -1', maxWidth: '50%', margin: '0 auto', width: '100%' }}>
+                        <div 
+                          key={step.number}
+                          style={isSingleCard ? {
+                            width: isMobile ? '100%' : isTablet ? '80%' : '50%',
+                            maxWidth: '100%',
+                          } : {}}
+                        >
                           <ScreenshotCard
                             step={step}
                             stepIndex={stepIndex}
@@ -726,30 +696,29 @@ export default function TutorialPage() {
               })}
           </div>
         </section>
-     
 
-
-        {/* CTA SECTION */}
+        {/* CTA Button */}
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
             marginTop: '1rem',
             marginBottom: '2rem',
+            padding: isMobile ? '0 1rem' : '0',
           }}
         >
           <button
-            onClick={() => (window.location.href = 'https://meethub.biz/2b1a38e0-f87c-4069-b8c6-4ed44e42d739/dashboard')}
+            onClick={() => (window.location.href = 'https://frontend-8x7e.onrender.com/')}
             style={{
               fontFamily: '"Poppins", sans-serif',
-              padding: '1.25rem 3.5rem',
+              padding: isMobile ? '1rem 2rem' : '1.25rem 3.5rem',
               background: 'rgb(30, 41, 59)',
               color: 'white',
               borderRadius: '1rem',
               border: 'none',
-              fontSize: '16px',
+              fontSize: isMobile ? '0.9375rem' : '1rem',
               fontWeight: 500,
-              lineHeight: '24px',
+              lineHeight: '1.5rem',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -757,6 +726,8 @@ export default function TutorialPage() {
               boxShadow: '0 6px 15px rgba(0,0,0,0.15)',
               transition: 'all 0.3s',
               whiteSpace: 'nowrap',
+              width: isMobile ? '100%' : 'auto',
+              justifyContent: 'center',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = 'rgb(15, 23, 42)'
@@ -768,7 +739,7 @@ export default function TutorialPage() {
             }}
           >
             Go to Dashboard
-            <ArrowRight style={{ width: '1.6rem', height: '1.6rem' }} />
+            <ArrowRight style={{ width: isMobile ? '1.25rem' : '1.6rem', height: isMobile ? '1.25rem' : '1.6rem' }} />
           </button>
         </div>
 
