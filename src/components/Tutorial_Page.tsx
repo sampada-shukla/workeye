@@ -379,7 +379,7 @@ export default function TutorialPage() {
   const topRowGridStyle = {
     display: 'grid',
     gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : '1fr 1fr',
-    gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '2.5rem',
+    gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '4rem',
     marginBottom: '4rem',
     alignItems: 'stretch',
   }
