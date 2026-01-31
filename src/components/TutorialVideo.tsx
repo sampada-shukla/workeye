@@ -19,7 +19,7 @@ import view_details_1 from "./assets/view_details_1.png";
 import view_analytics from "./assets/view_analytics.png";
 import application_usage from "./assets/application_usage.png";
 
-import { TutorialVideo } from './TutorialVideo';
+import  TutorialVideo  from './TutorialVideo';
 import { Footer} from './Footer';
 
 type ScreenshotStyle = {
