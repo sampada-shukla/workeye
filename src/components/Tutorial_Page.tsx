@@ -508,7 +508,7 @@ export default function TutorialPage() {
                 </div>
               </div>
 
-              {/* RIGHT: Video Card */}
+            
               {/* RIGHT: Video Card */}
 <motion.div
   style={{
@@ -540,6 +540,8 @@ export default function TutorialPage() {
     <TutorialVideo />
   </div>
 </motion.div>
+</div>
+</section>
 
 
         {/* Tutorial Section Header */}
@@ -721,6 +723,7 @@ export default function TutorialPage() {
                             colorIndex={step.number}
                             isHovered={hoveredCard === step.number}
                             onHover={setHoveredCard}
+                            isMobile={isMobile}
                           />
                         </div>
                       ))}
