@@ -508,7 +508,6 @@ export default function TutorialPage() {
                 </div>
               </div>
 
-            
               {/* RIGHT: Video Card */}
 <motion.div
   style={{
@@ -542,8 +541,6 @@ export default function TutorialPage() {
 </motion.div>
 </div>
 </section>
-
-
         {/* Tutorial Section Header */}
         <section
           style={{ 
