@@ -240,7 +240,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
       position: isMobile ? 'relative' : 'fixed',
 
       /*  MOBILE: same width as container */
-      width: isMobile ? 'calc(100% + 1.5rem)' : '360px',
+      width: isMobile ? '100%' : '360px',
       maxWidth: '100%',
 
      
