@@ -509,22 +509,38 @@ export default function TutorialPage() {
               </div>
 
               {/* RIGHT: Video Card */}
-              {!isMobile && (
-                <motion.div
-                  style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-                  animate={{ y: [0, -12, 0] }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
-                >
-                  <TutorialVideo />
-                </motion.div>
-              )}
-            </div>
-          </div>
-        </section>
+              {/* RIGHT: Video Card */}
+<motion.div
+  style={{
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: isMobile ? '2rem' : '0',
+  }}
+  animate={!isMobile ? { y: [0, -12, 0] } : undefined}
+  transition={
+    !isMobile
+      ? {
+          duration: 3,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }
+      : undefined
+  }
+>
+  <div
+    style={{
+      width: '100%',
+      maxWidth: isMobile ? '100%' : '520px',
+      aspectRatio: '16 / 9',
+      borderRadius: '1.25rem',
+      overflow: 'hidden',
+    }}
+  >
+    <TutorialVideo />
+  </div>
+</motion.div>
+
 
         {/* Tutorial Section Header */}
         <section
