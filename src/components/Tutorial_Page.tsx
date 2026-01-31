@@ -589,6 +589,7 @@ export default function TutorialPage() {
                         colorIndex={step1.number}
                         isHovered={hoveredCard === step1.number}
                         onHover={setHoveredCard}
+                        isMobile={isMobile}
                       />
                     </div>
                   </div>
@@ -625,6 +626,7 @@ export default function TutorialPage() {
                         colorIndex={step2.number}
                         isHovered={hoveredCard === step2.number}
                         onHover={setHoveredCard}
+                        isMobile={isMobile}
                       />
                     </div>
                   </div>
@@ -648,6 +650,7 @@ export default function TutorialPage() {
                         colorIndex={step.number}
                         isHovered={hoveredCard === step.number}
                         onHover={setHoveredCard}
+                        isMobile={isMobile}
                       />
                     ))}
                   </div>
