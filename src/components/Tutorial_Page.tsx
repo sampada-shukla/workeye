@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useRef} from 'react';
 import {
   BarChart3,
   LayoutDashboard,
@@ -161,6 +162,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
   const boxStyle = getScreenshotStyle(colorIndex)
   const Icon = step.icon
   const screenshotStyle = SCREENSHOT_CONFIG.default
+  const cardRef = useRef<HTMLDivElement | null>(null)
 
   return (
     <div
@@ -191,6 +193,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
         >
           <div
             style={{
+              ref: {cardRef}
               background: boxStyle.bg,
               border: `2px solid ${boxStyle.border}`,
               borderRadius: CONTAINER_CONFIG.borderRadius,
