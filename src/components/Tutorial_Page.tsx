@@ -245,7 +245,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
 
       /* ✅ MOBILE positioning */
       left: isMobile ? '4%' : '42%',
-      top: isMobile ? 'auto' : '50%',
+      top: isMobile ? 'auto' : '35%',
       transform: isMobile ? 'none' : 'translate(-50%, -50%)',
       marginTop: isMobile ? '1rem' : '0',
 
@@ -255,7 +255,6 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
       padding: '1.25rem',
       boxShadow: '0 15px 30px rgba(0,0,0,0.3)',
       color: 'white',
-
       zIndex: isMobile ? 5 : 999999,
       pointerEvents: isMobile ? 'auto' : 'none',
     }}
@@ -509,38 +508,23 @@ export default function TutorialPage() {
               </div>
 
               {/* RIGHT: Video Card */}
-<motion.div
-  style={{
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: isMobile ? '2rem' : '0',
-  }}
-  animate={!isMobile ? { y: [0, -12, 0] } : undefined}
-  transition={
-    !isMobile
-      ? {
-          duration: 3,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }
-      : undefined
-  }
->
-  <div
-    style={{
-      width: '100%',
-      maxWidth: isMobile ? '100%' : '520px',
-      aspectRatio: '16 / 9',
-      borderRadius: '1.25rem',
-      overflow: 'hidden',
-    }}
-  >
-    <TutorialVideo />
-  </div>
-</motion.div>
-</div>
-</section>
+              {!isMobile && (
+                <motion.div
+                  style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+                  animate={{ y: [0, -12, 0] }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                >
+                  <TutorialVideo />
+                </motion.div>
+              )}
+            </div>
+          </div>
+        </section>
+
         {/* Tutorial Section Header */}
         <section
           style={{ 
