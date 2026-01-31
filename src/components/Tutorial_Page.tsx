@@ -20,7 +20,7 @@ import view_details_1 from "./assets/view_details_1.png";
 import view_analytics from "./assets/view_analytics.png";
 import application_usage from "./assets/application_usage.png";
 
-import  TutorialVideo  from './TutorialVideo';
+import { TutorialVideo } from './TutorialVideo';
 import { Footer} from './Footer';
 
 type ScreenshotStyle = {
@@ -150,6 +150,7 @@ interface ScreenshotCardProps {
   colorIndex: number;
   isHovered: boolean;
   onHover: (number: number | null) => void;
+  isMobile: boolean;
 }
 
 const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
@@ -158,11 +159,13 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
   colorIndex,
   isHovered,
   onHover,
+  isMobile,
 }) => {
   const boxStyle = getScreenshotStyle(colorIndex)
   const Icon = step.icon
   const screenshotStyle = SCREENSHOT_CONFIG.default
   const cardRef = useRef<HTMLDivElement | null>(null)
+  
 
   return (
     <div
@@ -192,15 +195,16 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
           }}
         >
           <div
-              ref={cardRef}
-            style={{
-              background: boxStyle.bg,
-              border: `2px solid ${boxStyle.border}`,
-              borderRadius: CONTAINER_CONFIG.borderRadius,
-              padding: CONTAINER_CONFIG.padding,
-              boxShadow: `0 4px 12px ${boxStyle.shadow}`,
-            }}
-          >
+  ref={cardRef}
+  style={{
+    background: boxStyle.bg,
+    border: `2px solid ${boxStyle.border}`,
+    borderRadius: CONTAINER_CONFIG.borderRadius,
+    padding: CONTAINER_CONFIG.padding,
+    boxShadow: `0 4px 12px ${boxStyle.shadow}`,
+  }}
+>
+
             <div
               style={{
                 borderRadius: CONTAINER_CONFIG.innerBorderRadius,
@@ -227,28 +231,37 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
 
           {/* Hover Tooltip */}
           {isHovered && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              style={{
-                position: 'fixed',
-                top: '50%',
-                left: '45%',
-                transform: 'translate(-50%, -50%)',
-                width: 'min(360px, 90vw)',
-                background: 'rgba(15, 23, 42, 0.97)',
-                backdropFilter: 'blur(12px)',
-                borderRadius: '1.25rem',
-                padding: '1.5rem',
-                boxShadow: '0 15px 30px rgba(0,0,0,0.3)',
-                color: 'white',
-                zIndex: 999999,
-                pointerEvents: 'none',
-              }}
-            >
-              <div
+  <motion.div
+    initial={{ opacity: 0, scale: 0.96, y: isMobile ? 10 : 0 }}
+    animate={{ opacity: 1, scale: 1, y: 0 }}
+    exit={{ opacity: 0, scale: 0.96 }}
+    transition={{ duration: 0.25 }}
+    style={{
+      position: isMobile ? 'relative' : 'fixed',
+
+      /* ✅ MOBILE: same width as container */
+      width: isMobile ? '100%' : '360px',
+      maxWidth: '100%',
+
+      /* ✅ MOBILE positioning */
+      top: isMobile ? 'auto' : '45%',
+      left: isMobile ? 'auto' : '45%',
+      transform: isMobile ? 'none' : 'translate(-50%, -50%)',
+
+      marginTop: isMobile ? '1rem' : '0',
+
+      background: 'rgba(15, 23, 42, 0.97)',
+      backdropFilter: 'blur(12px)',
+      borderRadius: '1.25rem',
+      padding: '1.25rem',
+      boxShadow: '0 15px 30px rgba(0,0,0,0.3)',
+      color: 'white',
+
+      zIndex: isMobile ? 5 : 999999,
+      pointerEvents: isMobile ? 'auto' : 'none',
+    }}
+  >
+               <div
                 style={{
                   position: 'absolute',
                   top: '-12px',
