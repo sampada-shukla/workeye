@@ -192,8 +192,8 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
           }}
         >
           <div
-            style={{
               ref={cardRef}
+            style={{
               background: boxStyle.bg,
               border: `2px solid ${boxStyle.border}`,
               borderRadius: CONTAINER_CONFIG.borderRadius,
