@@ -243,10 +243,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
       width: isMobile ? 'calc(100% + 1.5rem)' : '360px',
       maxWidth: '100%',
 
-      /*mobile horizontal nudge */
-      left: isMobile ? '-0.75rem' : '45%',
-      top: isMobile ? 'auto' : '45%',
-
+     
       /*  MOBILE positioning */
     
       transform: isMobile ? 'none' : 'translate(-50%, -50%)',
