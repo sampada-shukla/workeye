@@ -19,7 +19,7 @@ import view_details_1 from "./assets/view_details_1.png";
 import view_analytics from "./assets/view_analytics.png";
 import application_usage from "./assets/application_usage.png";
 
-import { TutorialVideo } from './TutorialVideo';
+import  TutorialVideo  from './TutorialVideo';
 import { Footer} from './Footer';
 
 type ScreenshotStyle = {
@@ -215,7 +215,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
                 style={{
                   width: '100%',
                   height: '100%',
-                  objectFit: 'cover',
+                  objectFit: 'contain',
                   display: 'block',
                 }}
               />
@@ -232,7 +232,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
               style={{
                 position: 'fixed',
                 top: '50%',
-                left: '50%',
+                left: '45%',
                 transform: 'translate(-50%, -50%)',
                 width: 'min(360px, 90vw)',
                 background: 'rgba(15, 23, 42, 0.97)',
@@ -372,7 +372,7 @@ export default function TutorialPage() {
   const cardsGridStyle = {
     display: 'grid',
     gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : 'repeat(2, 1fr)',
-    gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+    gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '4rem',
     alignItems: 'start',
   }
 
@@ -380,7 +380,7 @@ export default function TutorialPage() {
     display: 'grid',
     gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : '1fr 1fr',
     gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '2.5rem',
-    marginBottom: '3rem',
+    marginBottom: '4rem',
     alignItems: 'stretch',
   }
 
