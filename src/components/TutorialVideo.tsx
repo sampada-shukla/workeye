@@ -1,7 +1,7 @@
 import { Clock, Check, ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 
-export const TutorialVideo = () => {
+export const TutorialVideo = ({ isMobile }: { isMobile?: boolean }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -43,7 +43,10 @@ export const TutorialVideo = () => {
       <div
         style={{
           position: 'relative',
-          height: '240px',
+          /* FIX: use aspectRatio on mobile instead of fixed height */
+          ...(isMobile
+            ? { aspectRatio: '1 / 1', height: 'auto' }
+            : { height: '240px' }),
           background: 'linear-gradient(135deg, rgb(219, 234, 254), rgb(207, 250, 254), rgb(186, 230, 253))',
           overflow: 'hidden',
         }}
