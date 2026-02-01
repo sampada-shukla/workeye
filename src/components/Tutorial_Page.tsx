@@ -536,6 +536,7 @@ export default function TutorialPage() {
   }}>
     <TutorialVideo />
   </div>
+</div>
 </motion.div>
 
         {/* Tutorial Section Header */}
