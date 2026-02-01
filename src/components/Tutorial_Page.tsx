@@ -508,19 +508,17 @@ export default function TutorialPage() {
               </div>
 
               {/* RIGHT: Video Card */}
-              {!isMobile && (
                 <motion.div
                   style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-                  animate={{ y: [0, -12, 0] }}
+                  animate={{ y: isMobile ? 0 : [0, -12, 0] }}
                   transition={{
                     duration: 3,
-                    repeat: Infinity,
+                    repeat: isMobile ? 0 : Infinity,
                     ease: 'easeInOut',
                   }}
                 >
                   <TutorialVideo />
                 </motion.div>
-              )}
             </div>
           </div>
         </section>
