@@ -507,28 +507,27 @@ export default function TutorialPage() {
                 </div>
               </div>
 
-              {/* RIGHT: Video Card - Square on Mobile */}
+             {/* RIGHT: VIDEO - FIXED SQUARE BOX */}
               <motion.div
-                style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
                 animate={{ y: isMobile ? 0 : [0, -12, 0] }}
-                transition={{
-                  duration: 3,
-                  repeat: isMobile ? 0 : Infinity,
-                  ease: 'easeInOut',
-                }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
               >
                 <div style={{
                   width: '100%',
-                  maxWidth: isMobile ? '400px' : 'none', 
-                  aspectRatio: isMobile ? '1/1' : '16/9', // Forces Square on Mobile
-                  overflow: 'hidden',
+                  maxWidth: isMobile ? '400px' : 'none',
+                  aspectRatio: isMobile ? '1/1' : '16/9', 
                   borderRadius: '1.5rem',
+                  overflow: 'hidden',
+                  background: '#000',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  background: '#000' 
+                  justifyContent: 'center'
                 }}>
-                  <TutorialVideo />
+                   {/* This wrapper helps the video fill the square space */}
+                   <div style={{ width: '100%', height: '100%', display: 'flex' }}>
+                      <TutorialVideo />
+                   </div>
                 </div>
               </motion.div>
             </div>
