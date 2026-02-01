@@ -507,61 +507,20 @@ export default function TutorialPage() {
                 </div>
               </div>
 
-              {/* RIGHT: Video Card — visible on all breakpoints */}
-              {/* On mobile: centered square wrapper; on desktop: original layout */}
-              <motion.div
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-                animate={{ y: isMobile ? 0 : [0, -12, 0] }}
-                transition={{
-                  duration: 3,
-                  repeat: isMobile ? 0 : Infinity,
-                  ease: 'easeInOut',
-                }}
-              >
-                {/* 
-                  Mobile: wrap TutorialVideo in a square container so it renders 1:1.
-                  Desktop: no wrapper constraints — TutorialVideo keeps its own sizing.
-                */}
-                {isMobile ? (
-                  <div
-                    style={{
-                      width: '100%',
-                      maxWidth: '340px',
-                      aspectRatio: '1 / 1',
-                      position: 'relative',
-                      borderRadius: '1rem',
-                    }}
-                  >
-                    {/* 
-                      Outer square sets the 1:1 box.
-                      Inner div stretches TutorialVideo to fill it fully
-                      without clipping — the video component itself 
-                      will scale/fit inside this space.
-                    */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '100%',
-                        height: '100%',
-                      }}
-                    >
-                      <div style={{ width: '100%', height: '100%' }}>
-                        <TutorialVideo />
-                      </div>
-                    </div>
-                  </div>
-                ) : (
+              {/* RIGHT: Video Card */}
+              {!isMobile && (
+                <motion.div
+                  style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+                  animate={{ y: isMobile ? 0 : [0, -12, 0] }}
+                  transition={{
+                    duration: 3,
+                    repeat: isMobile ? 0 : Infinity,
+                    ease: 'easeInOut',
+                  }}
+                >
                   <TutorialVideo />
-                )}
-              </motion.div>
+                </motion.div>
+              )}
             </div>
           </div>
         </section>
@@ -806,4 +765,4 @@ export default function TutorialPage() {
       </div>
     </div>
   )
-}
+} 
