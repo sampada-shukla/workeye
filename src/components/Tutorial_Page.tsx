@@ -508,7 +508,7 @@ export default function TutorialPage() {
               </div>
 
               {/* RIGHT: Video Card */}
-              {!isMobile && (
+              
                 <motion.div
                   style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
                   animate={{ y: isMobile ? 0 : [0, -12, 0] }}
@@ -520,7 +520,7 @@ export default function TutorialPage() {
                 >
                   <TutorialVideo />
                 </motion.div>
-              )}
+              
             </div>
           </div>
         </section>
