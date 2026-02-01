@@ -507,18 +507,22 @@ export default function TutorialPage() {
                 </div>
               </div>
 
-              {/* RIGHT: Video Card */}
-              
-                <motion.div
-                  style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-                  animate={{ y: isMobile ? 0 : [0, -12, 0] }}
-                  transition={{
-                    duration: 3,
-                    repeat: isMobile ? 0 : Infinity,
-                    ease: 'easeInOut',
-                  }}
-                >
-                  <div style={{
+           {/* RIGHT: Video Card */}
+<motion.div
+  style={{ 
+    width: '100%', 
+    display: 'flex', 
+    justifyContent: 'center',
+    marginTop: isMobile ? '1.5rem' : '0' 
+  }}
+  animate={{ y: isMobile ? 0 : [0, -12, 0] }}
+  transition={{
+    duration: 3,
+    repeat: isMobile ? 0 : Infinity,
+    ease: 'easeInOut',
+  }}
+>
+  <div style={{
     width: '100%',
     maxWidth: isMobile ? '400px' : 'none', 
     aspectRatio: isMobile ? '1/1' : '16/9', 
@@ -527,14 +531,12 @@ export default function TutorialPage() {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: '#000' 
+    background: '#000',
+    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
   }}>
-                  <TutorialVideo />
-                </motion.div>
-              
-            </div>
-          </div>
-        </section>
+    <TutorialVideo />
+  </div>
+</motion.div>
 
         {/* Tutorial Section Header */}
         <section
