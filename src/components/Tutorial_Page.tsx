@@ -532,11 +532,31 @@ export default function TutorialPage() {
                       width: '100%',
                       maxWidth: '340px',
                       aspectRatio: '1 / 1',
-                      overflow: 'hidden',
+                      position: 'relative',
                       borderRadius: '1rem',
                     }}
                   >
-                    <TutorialVideo />
+                    {/* 
+                      Outer square sets the 1:1 box.
+                      Inner div stretches TutorialVideo to fill it fully
+                      without clipping — the video component itself 
+                      will scale/fit inside this space.
+                    */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
+                        height: '100%',
+                      }}
+                    >
+                      <div style={{ width: '100%', height: '100%' }}>
+                        <TutorialVideo />
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <TutorialVideo />
