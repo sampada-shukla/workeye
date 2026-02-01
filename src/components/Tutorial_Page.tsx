@@ -239,11 +239,11 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
     style={{
       position: isMobile ? 'relative' : 'fixed',
 
-      /* ✅ MOBILE: same width as container */
+      /* MOBILE: same width as container */
       width: isMobile ? '92%' : '300px',
       maxWidth: '300px',
 
-      /* ✅ MOBILE positioning */
+      /*  MOBILE positioning */
       left: isMobile ? '4%' : '42%',
       top: isMobile ? 'auto' : '35%',
       transform: isMobile ? 'none' : 'translate(-50%, -50%)',
@@ -518,6 +518,17 @@ export default function TutorialPage() {
                     ease: 'easeInOut',
                   }}
                 >
+                  <div style={{
+    width: '100%',
+    maxWidth: isMobile ? '400px' : 'none', 
+    aspectRatio: isMobile ? '1/1' : '16/9', 
+    overflow: 'hidden',
+    borderRadius: '1.5rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: '#000' 
+  }}>
                   <TutorialVideo />
                 </motion.div>
               
