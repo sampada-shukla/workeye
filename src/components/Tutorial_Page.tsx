@@ -508,39 +508,120 @@ export default function TutorialPage() {
               </div>
 
            {/* RIGHT: Video Card */}
-<motion.div
-  style={{ 
-    width: '100%', 
-    display: 'flex', 
-    justifyContent: 'center',
-    marginTop: isMobile ? '1.5rem' : '0' 
-  }}
-  animate={{ y: isMobile ? 0 : [0, -12, 0] }}
-  transition={{
-    duration: 3,
-    repeat: isMobile ? 0 : Infinity,
-    ease: 'easeInOut',
-  }}
->
-  <div style={{
-    width: '100%',
-    maxWidth: isMobile ? '400px' : 'none', 
-    aspectRatio: isMobile ? '1/1' : '16/9', 
-    overflow: 'hidden',
-    borderRadius: '1.5rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: '#000',
-    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-  }}>
-    <TutorialVideo />
+{/* Hero Section */}
+        <section
+          style={{
+            padding: isMobile ? '2rem 1rem' : isTablet ? '2.5rem 1.5rem' : '3rem 1.5rem',
+            minHeight: isMobile ? 'auto' : '500px',
+            display: 'flex',
+            alignItems: 'center',
+            background: 'linear-gradient(135deg, #ecfeff 0%, #ffffff 50%, #ecfeff 100%)',
+          }}
+        >
+          <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', padding: isMobile ? '0 1rem' : '0 1.5rem' }}>
+            <div style={heroGridStyle}>
+              {/* LEFT: Text Content */}
+              <div style={{ maxWidth: isMobile ? '100%' : '650px' }}>
+                <h1 style={h1Style}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                    <img 
+                      src={logoImage} 
+                      alt="WorkEye Logo" 
+                      style={{ 
+                        width: isMobile ? '5rem' : '7.5rem', 
+                        height: isMobile ? '5rem' : '7.5rem', 
+                        objectFit: 'contain' 
+                      }} 
+                    />
+                  </div>
+
+                  <span style={{ color: 'rgb(6, 182, 212)', fontWeight: 900 }}>Explore WorkEye</span>{' '}
+                  <span style={{ color: '#0F172A' }}>with Detailed Step-by-Step Tutorials</span>
+                </h1>
+
+                <p
+                  style={{
+                    fontFamily: '"Inter", sans-serif',
+                    fontSize: isMobile ? '0.9375rem' : '1rem',
+                    fontWeight: 400,
+                    color: '#475569',
+                    marginBottom: '1.5rem',
+                    lineHeight: '1.625rem',
+                  }}
+                >
+                  Learn how to streamline operations, boost productivity, and scale faster with comprehensive tutorials
+                  covering setup, configuration, and advanced features.
+                </p>
+
+                {/* Feature List */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {[
+                    'Quick start guides for instant setup',
+                    'Advanced feature walkthroughs',
+                    'How it works steps for smooth onboarding',
+                  ].map((feature) => (
+                    <div
+                      key={feature}
+                      style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
+                    >
+                      <div
+                        style={{
+                          width: isMobile ? '1.75rem' : '2.25rem',
+                          height: isMobile ? '1.75rem' : '2.25rem',
+                          borderRadius: '0.5rem',
+                          background: 'rgba(6, 182, 212, 0.15)',
+                          border: '2px solid rgb(6, 182, 212)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <CheckCircle style={{ width: isMobile ? '1rem' : '1.25rem', height: isMobile ? '1rem' : '1.25rem', color: 'rgb(6, 182, 212)' }} />
+                      </div>
+                      <span
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: isMobile ? '0.9375rem' : '1rem',
+                          fontWeight: 500,
+                          color: '#475569',
+                          lineHeight: '1.625rem',
+                        }}
+                      >
+                        {feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* RIGHT: Video Card - Square on Mobile */}
+              <motion.div
+                style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+                animate={{ y: isMobile ? 0 : [0, -12, 0] }}
+                transition={{
+                  duration: 3,
+                  repeat: isMobile ? 0 : Infinity,
+                  ease: 'easeInOut',
+                }}
+              >
+                <div style={{
+                  width: '100%',
+                  maxWidth: isMobile ? '400px' : 'none', 
+                  aspectRatio: isMobile ? '1/1' : '16/9', // Forces Square on Mobile
+                  overflow: 'hidden',
+                  borderRadius: '1.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: '#000' 
+                }}>
+                  <TutorialVideo />
                 </div>
               </motion.div>
-            </div> 
-          </div> 
+            </div>
+          </div>
         </section>
-
         {/* Tutorial Section Header */}
         <section
           style={{ 
