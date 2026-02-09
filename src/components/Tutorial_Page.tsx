@@ -38,7 +38,7 @@ const tutorialSections = [
         title: 'Admin Dashboard',
         description: 'Displays comprehensive overview including total employees, active members, average screen time, productivity metrics, peak hours, and automated screenshot counts with advanced filtering options.',
         icon: LayoutDashboard,
-        iconColor: 'rgb(99, 102, 241)',
+        iconColor: '#6366F1',
         image: workeye_dashboard,
         details: [
           'Total employees overview',
@@ -61,7 +61,7 @@ const tutorialSections = [
         title: 'Employee Overview Dashboard',
         description: 'After clicking on View Details, view individual employee profile with current status, screen time breakdown (7h 30m), active time percentage (91%), idle time (42m), and productivity rating with real-time analytics.',
         icon: UserCheck,
-        iconColor: 'rgb(34, 197, 94)',
+        iconColor: '#22C55E',
         image: view_details_1,
         details: [
           'Current employee status',
@@ -76,7 +76,7 @@ const tutorialSections = [
         title: 'Analytics Dashboard',
         description: 'On clicking View Analytics, comprehensive activity analysis showing current screen time, active time percentage, productivity metrics, quick analytics summary, and navigation guide for reports.',
         icon: BarChart3,
-        iconColor: 'rgb(79, 70, 229)',
+        iconColor: '#4F46E5',
         image: view_analytics,
         details: [
           'Current screen time analysis',
@@ -92,7 +92,7 @@ const tutorialSections = [
         title: 'Application Usage Analysis',
         description: 'Track time spent on different applications with detailed breakdown for last 30 days showing total time (0.0h), apps used (0), most used applications, and top app time metrics.',
         icon: Monitor,
-        iconColor: 'rgb(249, 115, 22)',
+        iconColor: '#F97316',
         image: application_usage,
         details: [
           'Last 30 days breakdown',
@@ -114,7 +114,7 @@ const tutorialSections = [
         title: 'Members Management',
         description: 'Add, manage, and organize team members. View total members (0), active (0), and inactive (0) status. Add your first member to get started with employee tracking and monitoring.',
         icon: Users,
-        iconColor: 'rgb(59, 130, 246)',
+        iconColor: '#3B82F6',
         image: members,
         details: [
           'Add new team members',
@@ -127,7 +127,6 @@ const tutorialSections = [
     ],
   },
 ];
-
 
 // Floating Navigation Buttons Component
 const FloatingNavButtons = ({ onScrollToTop, onScrollToBottom, showTop, showBottom }) => {
@@ -221,12 +220,10 @@ const FloatingNavButtons = ({ onScrollToTop, onScrollToBottom, showTop, showBott
 };
 
 // Enhanced Step Component with Premium Design
-const ScrollingStoryStep = ({ step, isMobile, isTablet, activeImageIndex, stepIndex, totalSteps }) => {
-  const isCompactStep = step.number === 16 || step.number === 18;
-
+const ScrollingStoryStep = ({ step, isMobile, isTablet, stepIndex, totalSteps }) => {
+  const stepRef = useRef(null);
   const imageRef = useRef(null);
   const popRef = useRef(null);
-  const stepRef = useRef(null);
   const [showPopup, setShowPopup] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const { scrollYProgress } = useScroll({
@@ -252,49 +249,7 @@ const ScrollingStoryStep = ({ step, isMobile, isTablet, activeImageIndex, stepIn
       }
     };
   }, []);
-     // Mobile popup handling with scroll threshold
-useEffect(() => {
-  if (!isMobile) return;
 
-  let lastScrollY = window.scrollY;
-  const scrollThreshold = 50; // pixels scrolled before closing
-
-  const handleClickOutside = (event) => {
-    if (
-      showPopup &&
-      imageRef.current &&
-      popRef.current &&
-      !imageRef.current.contains(event.target) &&
-      !popRef.current.contains(event.target)
-    ) {
-      setShowPopup(false);
-    }
-  };
-
-  const handleScroll = () => {
-    if (showPopup) {
-      const currentScrollY = window.scrollY;
-      const scrollDelta = Math.abs(currentScrollY - lastScrollY);
-      
-      if (scrollDelta > scrollThreshold) {
-        setShowPopup(false);
-      }
-    }
-  };
-
-  if (showPopup) {
-    lastScrollY = window.scrollY; // Set initial scroll position when popup opens
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
-    window.addEventListener('scroll', handleScroll, true);
-  }
-
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-    document.removeEventListener('touchstart', handleClickOutside);
-    window.removeEventListener('scroll', handleScroll, true);
-  };
-}, [showPopup, isMobile]);
   const imageOnLeft = step.number % 2 === 1;
 
   const imageX = useTransform(
@@ -313,19 +268,12 @@ useEffect(() => {
   const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, 1, 1, 1, 0]);
 
   const Icon = step.icon;
-  const images = step.multiImages ? step.images : [step.image];
-
-  // Progress indicator
-  const progressPercentage = ((stepIndex + 1) / totalSteps) * 100;
 
   return (
     <div
       ref={stepRef}
       style={{
-        minHeight: isCompactStep
-       ? isMobile ? '70vh' : '60vh'
-         : isMobile ? '85vh' : '75vh',
-
+        minHeight: isMobile ? '85vh' : '75vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -498,16 +446,10 @@ useEffect(() => {
               }}
             />
 
-            <AnimatePresence mode="wait">
-              <motion.img
+            <motion.img
               ref={imageRef}
-              key={activeImageIndex[step.number] ?? 0}
-              src={images[activeImageIndex[step.number] ?? 0]}
+              src={step.image}
               alt={step.title}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
               whileHover={{ 
                 scale: 1.03,
                 rotateY: 5,
@@ -522,10 +464,7 @@ useEffect(() => {
               }}
               style={{
                 width: '100%',
-                maxWidth: isCompactStep
-  ? (isMobile ? '320px' : isTablet ? '380px' : '320px')
-  : (isMobile ? '420px' : isTablet ? '500px' : '500px'),
-
+                maxWidth: isMobile ? '420px' : isTablet ? '500px' : '550px',
                 height: 'auto',
                 margin: '0 auto',
                 display: 'block',
@@ -538,7 +477,6 @@ useEffect(() => {
                 objectFit: 'contain',
               }}
             />
-            </AnimatePresence>
 
             {/* Image overlay effect on hover with animated icon */}
             <motion.div
@@ -582,9 +520,8 @@ useEffect(() => {
                 left: -10,
                 width: '40px',
                 height: '40px',
-                border: `3px solid ${step.iconColor}`,
-                borderRight: 'none',
-                borderBottom: 'none',
+                borderTop: `3px solid ${step.iconColor}`,
+                borderLeft: `3px solid ${step.iconColor}`,
                 borderRadius: '20px 0 0 0',
               }}
             />
@@ -600,15 +537,14 @@ useEffect(() => {
                 right: -10,
                 width: '40px',
                 height: '40px',
-                border: `3px solid ${step.iconColor}`,
-                borderLeft: 'none',
-                borderTop: 'none',
+                borderBottom: `3px solid ${step.iconColor}`,
+                borderRight: `3px solid ${step.iconColor}`,
                 borderRadius: '0 0 20px 0',
               }}
             />
           </motion.div>
 
-          {/* Enhanced Popup */}
+          {/* Enhanced Popup - OUTSIDE the image container so it appears below in mobile */}
           <AnimatePresence>
             {showPopup && (
               <motion.div
@@ -617,18 +553,14 @@ useEffect(() => {
                 exit={{ opacity: 0, scale: 0.9, y: 10 }}
                 transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 25 }}
                 style={{
-                  position: 'absolute',
-                  bottom: '30px',
-                  left: imageOnLeft ? '0' : 'auto',
-                  right: imageOnLeft ? 'auto' : '0',
-                  width: isCompactStep
-  ? (isMobile ? 'calc(100% - 40px)' : '260px')
-  : (isMobile ? 'calc(100% - 20px)' : '320px'),
-
-maxWidth: isCompactStep
-  ? (isMobile ? '280px' : '260px')
-  : (isMobile ? '340px' : '320px'),
-
+                  position: isMobile ? 'relative' : 'absolute',
+                  bottom: isMobile ? 'auto' : '-20px',
+                  top: isMobile ? 'auto' : 'auto',
+                  left: isMobile ? '0' : (imageOnLeft ? '0' : 'auto'),
+                  right: isMobile ? '0' : (imageOnLeft ? 'auto' : '0'),
+                  width: isMobile ? '100%' : '320px',
+                  maxWidth: isMobile ? 'none' : '320px',
+                  marginTop: isMobile ? '1.5rem' : '0',
                   background: 'linear-gradient(135deg, rgb(15, 23, 42), rgb(30, 41, 59))',
                   borderRadius: '1.5rem',
                   padding: isMobile ? '1.5rem' : '1.75rem',
@@ -656,57 +588,45 @@ maxWidth: isCompactStep
                   <Sparkles color={step.iconColor} size={20} />
                 </motion.div>
 
-                {/* Step badge - Enhanced with vibrant color */}
+                {/* Step badge */}
                 <motion.div
-                  whileHover={{ scale: 1.15, rotate: 360 }}
-                  transition={{ duration: 0.6 }}
                   style={{
                     position: 'absolute',
-                    top: '-20px',
-                    left: '-20px',
-                    width: isMobile ? '50px' : '60px',
-                    height: isMobile ? '50px' : '60px',
+                    top: '-26px',
+                    left: '-26px',
+                    width: '56px',
+                    height: '56px',
                     borderRadius: '50%',
-                    background: `linear-gradient(135deg, ${step.iconColor}, ${step.iconColor}ee)`,
+                    background: step.iconColor,
+                    boxShadow: `0 0 0 6px ${step.iconColor}99, 0 12px 25px rgba(0,0,0,0.35)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: isMobile ? '1.15rem' : '1.4rem',
-                    fontWeight: 900,
+                    fontSize: '20px',
+                    fontWeight: 700,
                     color: 'white',
-                    boxShadow: `0 12px 40px ${step.iconColor}dd, 0 0 30px ${step.iconColor}99, 0 4px 15px rgba(0,0,0,0.4)`,
-                    border: '4px solid white',
-                    zIndex: 100,
+                    zIndex: 20
                   }}
                 >
-                  <div style={{
-                    position: 'absolute',
-                    inset: -3,
-                    borderRadius: '50%',
-                    background: `linear-gradient(135deg, ${step.iconColor}, ${step.iconColor}aa)`,
-                    filter: 'blur(8px)',
-                    opacity: 0.7,
-                    zIndex: -1,
-                  }} />
                   {step.number}
                 </motion.div>
 
                 <div
-  ref={popRef}
-  style={{
-    width: isMobile ? '3rem' : '3.5rem',
-    height: isMobile ? '3rem' : '3.5rem',
-    borderRadius: '1rem',
-    background: step.iconColor,  // ← CHANGED: Solid color instead of gradient
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: '1rem',
-    boxShadow: `0 8px 20px ${step.iconColor}80`,  // ← CHANGED: Increased shadow opacity
-  }}
->
-  <Icon color="white" size={isMobile ? 20 : 24} strokeWidth={2.5} />
-</div>
+                  ref={popRef}
+                  style={{
+                    width: isMobile ? '3rem' : '3.5rem',
+                    height: isMobile ? '3rem' : '3.5rem',
+                    borderRadius: '1rem',
+                    background: `linear-gradient(135deg, ${step.iconColor}, ${step.iconColor}dd)`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '1rem',
+                    boxShadow: `0 8px 20px ${step.iconColor}40`,
+                  }}
+                >
+                  <Icon color="white" size={isMobile ? 20 : 24} strokeWidth={2.5} />
+                </div>
 
                 <h4
                   style={{
@@ -730,37 +650,6 @@ maxWidth: isCompactStep
                 >
                   {step.description}
                 </p>
-
-                {/*{step.details && (
-                  <ul
-                    style={{
-                      marginTop: '1rem',
-                      paddingLeft: '0',
-                      listStyle: 'none',
-                    }}
-                  >
-                    {step.details.map((d, i) => (
-                      <motion.li
-                        key={i}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                        style={{
-                          fontSize: isMobile ? '0.8rem' : '0.85rem',
-                          color: 'rgba(255,255,255,0.8)',
-                          marginBottom: '0.5rem',
-                          fontFamily: '"Inter", sans-serif',
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: '0.5rem',
-                        }}
-                      >
-                        <Zap size={14} color={step.iconColor} style={{ marginTop: '2px', flexShrink: 0 }} />
-                        <span>{d}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                )}*/}
               </motion.div>
             )}
           </AnimatePresence>
@@ -777,31 +666,24 @@ maxWidth: isCompactStep
             marginRight: !isMobile && !imageOnLeft ? '4rem' : '0',
           }}
         >
-  <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-  whileHover={{ y: -4 }}
-  transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-  style={{
-    background:
-      'linear-gradient(135deg, rgba(255,255,255,0.65), rgba(248,250,252,0.55))',
-    padding: isMobile ? '1.4rem' : '1.75rem',
-    borderRadius: '18px',
-    border: '1px solid rgba(255, 255, 255, 0.35)',
-    boxShadow: `
-      inset 0 1px 0 rgba(255, 255, 255, 0.35),
-      0 22px 50px rgba(0, 0, 0, 0.16),
-      0 8px 20px rgba(0, 0, 0, 0.12)
-    `,
-    backdropFilter: 'blur(14px) saturate(120%)',
-    WebkitBackdropFilter: 'blur(14px) saturate(120%)',
-    position: 'relative',
-    width: '85%',
-    maxWidth: isMobile ? '100%' : '440px',
-  }}
->
-
-
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            whileHover={{ y: -4 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.65), rgba(248,250,252,0.55))',
+              padding: isMobile ? '1.6rem' : '2rem',
+              borderRadius: '20px',
+              border: '1px solid rgba(255, 255, 255, 0.35)',
+              boxShadow: `inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 25px 60px rgba(0, 0, 0, 0.18), 0 10px 25px rgba(0, 0, 0, 0.12)`,
+              backdropFilter: 'blur(14px) saturate(120%)',
+              WebkitBackdropFilter: 'blur(14px) saturate(120%)',
+              position: 'relative',
+              width: '100%',
+              maxWidth: isMobile ? '100%' : '500px',
+            }}
+          >
             {/* Animated corner decoration */}
             <motion.div
               animate={{
@@ -817,7 +699,6 @@ maxWidth: isCompactStep
                 background: `conic-gradient(from 0deg, ${step.iconColor}15, transparent, ${step.iconColor}15)`,
                 borderRadius: '50%',
                 filter: 'blur(40px)',
-                
               }}
             />
 
@@ -829,7 +710,6 @@ maxWidth: isCompactStep
                 justifyContent: 'space-between',
                 marginBottom: '1.25rem',
                 position: 'relative',
-                
                 zIndex: 1,
               }}
             >
@@ -903,15 +783,15 @@ maxWidth: isCompactStep
                 </div>
               </div>
 
-              {/* Large step number - UPDATED to match reference */}
+              {/* Large step number - Square Badge */}
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 style={{
                   width: isMobile ? '52px' : '64px',
                   height: isMobile ? '52px' : '64px',
-                  borderRadius: '50%',
+                  borderRadius: '16px',
                   background: step.iconColor,
-                  border: '4px solid white',
+                  border: '2px solid white',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -919,7 +799,7 @@ maxWidth: isCompactStep
                   fontSize: isMobile ? '22px' : '28px',
                   fontWeight: 800,
                   color: 'white',
-                  boxShadow: `0 8px 20px ${step.iconColor}60, 0 0 0 1px ${step.iconColor}30`,
+                  boxShadow: `0 0 0 2px white, 0 8px 20px ${step.iconColor}, 0 18px 40px rgba(0,0,0,0.2), inset 0 2px 0 rgba(255,255,255,0.5)`,
                 }}
               >
                 {step.number}
@@ -941,21 +821,6 @@ maxWidth: isCompactStep
             >
               {step.title}
             </h4>
-
-            {/* Description */}
-           {/*<p
-              style={{
-                fontFamily: '"Inter", sans-serif',
-                fontSize: isMobile ? '15px' : '16px',
-                color: 'rgb(71, 85, 105)',
-                lineHeight: 1.7,
-                marginBottom: step.details ? '1.25rem' : '0',
-                position: 'relative',
-                zIndex: 1,
-              }}
-            >
-              {step.description}
-            </p>*/}
 
             {/* Details */}
             {step.details && (
@@ -1005,22 +870,21 @@ maxWidth: isCompactStep
               </div>
             )}
 
-            
             {/* Progress bar */}
-<motion.div
-  initial={{ width: 0 }}
-  animate={isInView ? { width: '116px' } : { width: 0 }}  // ← CHANGED: Fixed width
-  transition={{ duration: 0.8, delay: 0.4 }}
-  style={{
-    height: '4px',
-    background: step.iconColor,  // ← CHANGED: Solid color for visibility
-    marginTop: '0.5rem',  // ← CHANGED: Reduced margin
-    borderRadius: '10px',
-    boxShadow: `0 2px 8px ${step.iconColor}80`,  // ← CHANGED: Better shadow
-    position: 'relative',
-    zIndex: 10,
-  }}
-/>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={isInView ? { width: '116px' } : { width: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              style={{
+                height: '4px',
+                background: step.iconColor,
+                marginTop: '0.5rem',
+                borderRadius: '10px',
+                boxShadow: `0 3px 12px ${step.iconColor}, 0 6px 25px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.6)`,
+                position: 'relative',
+                zIndex: 10,
+              }}
+            />
           </motion.div>
         </motion.div>
       </div>
@@ -1029,7 +893,6 @@ maxWidth: isCompactStep
 };
 
 export default function TutorialPage() {
-  const [activeImageIndex, setActiveImageIndex] = useState({});
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
   const [showTopButton, setShowTopButton] = useState(false);
@@ -1037,8 +900,7 @@ export default function TutorialPage() {
 
   useEffect(() => {
     const link = document.createElement('link');
-    link.href =
-      'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap';
+    link.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap';
     link.rel = 'stylesheet';
     document.head.appendChild(link);
 
@@ -1098,8 +960,6 @@ export default function TutorialPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -1144,7 +1004,7 @@ export default function TutorialPage() {
 
       <div style={{ position: 'relative', zIndex: 10, width: '100%' }}>
         {/* Hero Section */}
-       <section
+        <section
           style={{
             padding: isMobile ? '2rem 1rem' : isTablet ? '2.5rem 1.5rem' : '3rem 1.5rem',
             minHeight: isMobile ? 'auto' : '500px',
@@ -1166,19 +1026,19 @@ export default function TutorialPage() {
                 display: isMobile ? 'flex' : 'grid',
                 flexDirection: isMobile ? 'column' : undefined,
                 gridTemplateColumns: isMobile ? undefined : isTablet ? '1fr' : '1.1fr 0.9fr',
-                gap: isMobile ? '0rem' : isTablet ? '2.5rem' : '3rem',
-                alignItems: 'start',
+                gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+                alignItems: isMobile ? "start" : "Center",
               }}
             >
               {/* Logo - appears first on mobile */}
-             {isMobile && (
+              {isMobile && (
                 <motion.div
                   initial={{ opacity: 0, x: -40 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.7, delay: 0.05 }}
                   style={{
                     display: 'flex',
-                    alignItems: 'centre',
+                    alignItems: 'start',
                     justifyContent: 'flex-start',
                     marginBottom: '1rem',
                   }}
@@ -1187,9 +1047,10 @@ export default function TutorialPage() {
                     src={logoImage}
                     alt="WorkEye Logo"
                     style={{
-                      width: '8rem',
+                      width: '6rem',
                       height: 'auto',
                       objectFit: 'contain',
+                      alignItems:'center'
                     }}
                   />
                 </motion.div>
@@ -1203,7 +1064,6 @@ export default function TutorialPage() {
                     display: 'flex', 
                     justifyContent: 'center', 
                     marginTop: '1.25rem',
-                    marginBottom: '3.5rem'
                   }}
                 >
                   <TutorialVideo />
@@ -1211,11 +1071,10 @@ export default function TutorialPage() {
               )}
 
               {/* Text Content */}
-              
-                <div
+              <div
                 style={{
                   maxWidth: isMobile ? '100%' : '650px',
-                  marginTop: isMobile ? '0' : '2rem',
+                  marginTop: isMobile ? '0' : '-2.5rem',
                 }}
               >
                 <motion.h1
@@ -1242,14 +1101,13 @@ export default function TutorialPage() {
                         justifyContent: 'flex-start',
                         marginLeft: '2rem',
                         marginBottom: '1.5rem',
-                        marginTop: '-2.5rem'
                       }}
                     >
                       <img
                         src={logoImage}
                         alt="WorkEye Logo"
                         style={{
-                          width: isTablet ? '6rem' : '7rem',
+                          width: isTablet ? '6rem' : '8rem',
                           height: 'auto',
                           objectFit: 'contain',
                         }}
@@ -1275,7 +1133,8 @@ export default function TutorialPage() {
                     lineHeight: isMobile ? '22px' : '26px',
                   }}
                 >
-                  Learn how to streamline operations, boost productivity, and scale faster with comprehensive tutorials covering setup, configuration, and advanced features.
+                  Learn how to monitor team productivity, track employee activities, and optimize workforce
+                  performance with comprehensive tutorials covering setup, analytics, and advanced features.
                 </motion.p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
@@ -1327,7 +1186,7 @@ export default function TutorialPage() {
                   ))}
                 </div>
               </div>
-             
+
               {/* Video for desktop/tablet */}
               {!isMobile && (
                 <motion.div
@@ -1335,7 +1194,13 @@ export default function TutorialPage() {
                     width: '100%', 
                     display: 'flex', 
                     justifyContent: 'center', 
-                    alignItems: 'flex-start',
+                    marginTop: '4rem',
+                  }}
+                  animate={{ y: [0, -12, 0] }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
                   }}
                 >
                   <TutorialVideo />
@@ -1348,7 +1213,7 @@ export default function TutorialPage() {
         {/* Tutorial Section Header */}
         <section
           style={{
-            padding: isMobile ? '4rem 1rem 1.5rem' : '6rem 1.5rem 2rem',
+            padding: isMobile ? '2.5rem 1rem 1.5rem' : '3rem 1.5rem 2rem',
             background: 'linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc)',
           }}
         >
@@ -1386,45 +1251,14 @@ export default function TutorialPage() {
                 fontFamily: '"Inter", sans-serif',
                 fontSize: isMobile ? '15px' : '17px',
                 color: '#475569',
+                maxWidth: '720px',
                 margin: '0 auto',
                 lineHeight: isMobile ? '23px' : '26px',
                 fontWeight: 400,
               }}
             >
-              Master WorkEye with our comprehensive guide covering every feature from sign-up to advanced functionality
+              Master WorkEye with our comprehensive guide covering every feature from setup to advanced analytics
             </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-              style={{
-                marginTop: '1.5rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.5rem',
-                padding: isMobile ? '0.75rem 1.25rem' : '1rem 1.5rem',
-                background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1))',
-                border: '2px solid rgba(6, 182, 212, 0.3)',
-                borderRadius: '12px',
-                maxWidth: '600px',
-                margin: '1.5rem auto 0',
-              }}
-            >
-              <Eye color="rgb(6, 182, 212)" size={isMobile ? 20 : 24} strokeWidth={2.5} />
-              <span
-                style={{
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: isMobile ? '14px' : '16px',
-                  color: 'rgb(15, 23, 42)',
-                  fontWeight: 600,
-                }}
-              >
-                {isMobile ? 'Tap' : 'Hover over'} cards to focus on each step
-              </span>
-            </motion.div>
           </div>
         </section>
 
@@ -1522,7 +1356,6 @@ export default function TutorialPage() {
                     step={step}
                     isMobile={isMobile}
                     isTablet={isTablet}
-                    activeImageIndex={activeImageIndex}
                     stepIndex={sectionStepStart + stepIndex}
                     totalSteps={totalSteps}
                   />
@@ -1532,9 +1365,7 @@ export default function TutorialPage() {
           })}
         </section>
 
-        {/* CTA SECTION */}
-    
-        <div
+      <div
           style={{
             padding: isMobile ? '3rem 1.25rem 4rem' : isTablet ? '4rem 2.5rem 5rem' : '5rem 3rem 6rem',
             textAlign: 'center',
