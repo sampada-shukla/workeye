@@ -39,7 +39,7 @@ const tutorialSections = [
         title: 'Admin Dashboard',
         description: 'Displays comprehensive overview including total employees, active members, average screen time, productivity metrics, peak hours, and automated screenshot counts with advanced filtering options.',
         icon: LayoutDashboard,
-        iconColor: '#10B981',
+        iconColor: '#EF4444',
         image: workeye_dashboard,
         details: [
           'Total employees overview',
