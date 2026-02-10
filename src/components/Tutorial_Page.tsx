@@ -1302,7 +1302,7 @@ export default function TutorialPage() {
                 fontWeight: 400,
               }}
             >
-              Master Geotrack with our comprehensive guide covering every feature from sign-up to advanced functionality
+              Master WorkEye with our comprehensive guide covering every feature from sign-up to advanced functionality
             </motion.p>
             <motion.div
   initial={{ opacity: 0, y: 16 }}
