@@ -14,6 +14,7 @@ import {
   Zap,
   Eye,
   Sparkles,
+  Info
 } from 'lucide-react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 
