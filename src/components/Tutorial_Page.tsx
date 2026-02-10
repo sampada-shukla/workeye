@@ -249,6 +249,50 @@ const ScrollingStoryStep = ({ step, isMobile, isTablet, stepIndex, totalSteps })
       }
     };
   }, []);
+  // Mobile popup handling with scroll threshold
+useEffect(() => {
+  if (!isMobile) return;
+
+  let lastScrollY = window.scrollY;
+  const scrollThreshold = 50; // pixels scrolled before closing
+
+  const handleClickOutside = (event) => {
+    if (
+      showPopup &&
+      imageRef.current &&
+      popRef.current &&
+      !imageRef.current.contains(event.target) &&
+      !popRef.current.contains(event.target)
+    ) {
+      setShowPopup(false);
+    }
+  };
+
+  const handleScroll = () => {
+    if (showPopup) {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY);
+      
+      if (scrollDelta > scrollThreshold) {
+        setShowPopup(false);
+      }
+    }
+  };
+
+  if (showPopup) {
+    lastScrollY = window.scrollY; 
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    window.addEventListener('scroll', handleScroll, true);
+  }
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+    document.removeEventListener('touchstart', handleClickOutside);
+    window.removeEventListener('scroll', handleScroll, true);
+  };
+}, [showPopup, isMobile]);
+
 
   const imageOnLeft = step.number % 2 === 1;
 
@@ -1251,14 +1295,94 @@ export default function TutorialPage() {
                 fontFamily: '"Inter", sans-serif',
                 fontSize: isMobile ? '15px' : '17px',
                 color: '#475569',
-                maxWidth: '720px',
+               // maxWidth: '720px',
                 margin: '0 auto',
                 lineHeight: isMobile ? '23px' : '26px',
                 fontWeight: 400,
               }}
             >
-              Master WorkEye with our comprehensive guide covering every feature from setup to advanced analytics
+              Master Geotrack with our comprehensive guide covering every feature from sign-up to advanced functionality
             </motion.p>
+            <motion.div
+  initial={{ opacity: 0, y: 16 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.35 }}
+  viewport={{ once: true }}
+  style={{
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '0.75rem',
+    padding: isMobile ? '0.65rem 1rem' : '0.75rem 1.25rem',
+    margin: '1.25rem auto 0',
+    maxWidth: 'fit-content',
+
+    // 👇 BOX STYLES
+    background:
+      'linear-gradient(135deg, rgba(6,182,212,0.12), rgba(59,130,246,0.12))',
+    border: '1.5px solid rgba(6,182,212,0.35)',
+    borderRadius: '999px',
+    backdropFilter: 'blur(14px)',
+    WebkitBackdropFilter: 'blur(14px)',
+    boxShadow:
+      '0 6px 20px rgba(6,182,212,0.18), inset 0 1px 0 rgba(255,255,255,0.6)',
+  }}
+>
+<motion.div 
+                animate={{ 
+                  scale: [1, 1.05, 1],
+                  rotate: [0, 5, -5, 0]
+                }}
+                transition={{ 
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{
+                  position: 'relative',
+                  zIndex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: isMobile ? '2.25rem' : '2.5rem',
+                  height: isMobile ? '2.25rem' : '2.5rem',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(6, 182, 212, 0.25))',
+                  backdropFilter: 'blur(15px)',
+                  WebkitBackdropFilter: 'blur(15px)',
+                  border: '1.5px solid rgba(6, 182, 212, 0.5)',
+                  boxShadow: '0 4px 12px rgba(6, 182, 212, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 20px rgba(6, 182, 212, 0.2)',
+                }}
+              >
+                {/* Icon glow effect */}
+  <div
+  style={{
+    position: 'absolute',
+    inset: '-4px',
+    borderRadius: '50%',
+    background: 'radial-gradient(circle, rgba(6, 182, 212, 0.4), transparent 70%)',
+    filter: 'blur(6px)',
+    animation: 'pulse 2s ease-in-out infinite',
+  }}
+></div>
+<Info size={isMobile ? 18 : 20} color="#06B6D4" strokeWidth={2.5} style={{ position: 'relative', zIndex: 1 }} />
+              </motion.div>
+              <span
+                style={{
+                  fontFamily: '"Inter", sans-serif',
+                  fontSize: isMobile ? '0.875rem' : isTablet ? '0.9375rem' : '1rem',
+
+                  color: '#0e7490',
+                  fontWeight: 600,
+                  position: 'relative',
+                  zIndex: 1,
+                  textShadow: '0 1px 3px rgba(255,255,255,0.9), 0 0 10px rgba(255,255,255,0.5)',
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                {isMobile ? 'Tap cards for details' : 'Hover over cards to highlight the steps'}
+              </span>
+            </motion.div>
           </div>
         </section>
 
@@ -1364,6 +1488,7 @@ export default function TutorialPage() {
             );
           })}
         </section>
+        {/*CTA Button*/}
 
       <div
           style={{
