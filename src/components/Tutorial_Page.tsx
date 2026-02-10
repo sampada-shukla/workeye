@@ -1178,8 +1178,7 @@ export default function TutorialPage() {
                     lineHeight: isMobile ? '22px' : '26px',
                   }}
                 >
-                  Learn how to monitor team productivity, track employee activities, and optimize workforce
-                  performance with comprehensive tutorials covering setup, analytics, and advanced features.
+                  Learn how to streamline meetings, boost collaboration, and scale faster with comprehensive tutorials covering setup, configuration, and advanced features.
                 </motion.p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
