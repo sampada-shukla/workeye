@@ -1170,12 +1170,12 @@ export default function TutorialPage() {
                   transition={{ duration: 0.7, delay: 0.2 }}
                   style={{
                     fontFamily: '"Inter", sans-serif',
-                    fontSize: isMobile ? '14px' : '16px',
+                    fontSize: isMobile ? '18px' : '19px',
                     fontWeight: 400,
                     color: '#475569',
                     marginTop: '-0.75rem',
                     marginBottom: '1.5rem',
-                    lineHeight: isMobile ? '22px' : '26px',
+                    lineHeight: isMobile ? '28px' : '30px',
                   }}
                 >
                   Learn how to monitor team productivity, track employee activities, and optimize 
