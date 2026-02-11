@@ -1179,7 +1179,7 @@ export default function TutorialPage() {
                     lineHeight: isMobile ? '22px' : '26px',
                   }}
                 >
-                  Learn how to monitor team productivity, track employee activities, and <br /> optimize 
+                  Learn how to monitor team productivity, track employee activities, and <br/> optimize 
                   performance with tutorials covering setup and analytics.
                 </motion.p>
 
