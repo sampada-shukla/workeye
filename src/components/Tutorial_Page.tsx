@@ -599,7 +599,7 @@ useEffect(() => {
                 transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 25 }}
                 style={{
                   position: isMobile ? 'relative' : 'absolute',
-                  bottom: isMobile ? 'auto' : '-20px',
+                  bottom: isMobile ? 'auto' : '80px',
                   top: isMobile ? 'auto' : 'auto',
                   left: isMobile ? '0' : (imageOnLeft ? '0' : 'auto'),
                   right: isMobile ? '0' : (imageOnLeft ? 'auto' : '0'),
