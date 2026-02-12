@@ -1391,7 +1391,7 @@ export default function TutorialPage() {
         {/* Scrolling Story Steps */}
         <section
           style={{
-           background: 'linear-gradient(180deg, #f0fbff 0%, #f8fafc 100%)',
+           background: '#f0fdff',
 
             position: 'relative',
           }}
