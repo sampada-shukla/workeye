@@ -1165,6 +1165,12 @@ export default function TutorialPage() {
             <div ref={contentRef} style={{ scrollMarginTop: '90px', width: '100%', maxWidth: '1100px', display: 'flex', justifyContent: 'center' }}>
               <AnimatePresence mode="wait">
                 <motion.div key={`section-${currentSection?.sectionId}`} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.3 }} style={{ textAlign: 'center', width: '100%', maxWidth: '700px' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '4px 14px', borderRadius: '999px', marginBottom: '0.6rem', background: `${currentStep?.iconColor}14`, border: `1.5px solid ${currentStep?.iconColor}35` }}>
+                    <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: currentStep?.iconColor, boxShadow: `0 0 6px ${currentStep?.iconColor}80` }} />
+                    <span style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: currentStep?.iconColor, fontFamily: '"Inter", sans-serif' }}>
+                      {currentSection?.sectionTitle}
+                    </span>
+                  </div>
                   <p style={{ fontSize: isMobile ? '13px' : '14px', color: BRAND.muted, margin: 0, lineHeight: 1.65, fontFamily: '"Inter", sans-serif' }}>
                     {currentSection?.sectionDescription}
                   </p>
